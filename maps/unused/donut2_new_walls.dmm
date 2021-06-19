@@ -26573,9 +26573,9 @@
 /area/station/security/brig)
 "bic" = (
 /obj/machinery/camera{
-	c_tag = "Gas Chamber";
+	c_tag = "Interrogation";
 	dir = 8;
-	network = "Gas Chamber"
+	network = "Interrogation"
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -38698,6 +38698,9 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"ckV" = (
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "cmh" = (
 /obj/cable{
 	d1 = 4;
@@ -38893,6 +38896,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"dsC" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/caution/west,
+/area/station/hangar/engine)
 "dsM" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -39060,6 +39067,9 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/hor)
+"dZU" = (
+/turf/simulated/floor/caution/west,
+/area/station/hangar/engine)
 "ead" = (
 /obj/machinery/light,
 /turf/simulated/floor/shuttlebay,
@@ -39494,6 +39504,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"fqR" = (
+/obj/machinery/vehicle/miniputt/indyputt/armed{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "fvM" = (
 /obj/cable{
 	d1 = 1;
@@ -39584,6 +39600,15 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/refinery)
+"fOS" = (
+/obj/machinery/camera{
+	c_tag = "South Primary Hallway Midport";
+	dir = 9
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/hallway/primary/south)
 "fRa" = (
 /obj/cable{
 	d1 = 1;
@@ -40354,6 +40379,14 @@
 	dir = 8
 	},
 /area/station/bridge)
+"ibA" = (
+/obj/table/auto,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/shipcomponent/mainweapon/foamer,
+/turf/simulated/floor/caution/west,
+/area/station/hangar/engine)
 "idi" = (
 /obj/machinery/secscanner{
 	dir = 4;
@@ -40607,6 +40640,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"iQZ" = (
+/obj/machinery/camera{
+	c_tag = "Inner Maintenance"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "iRE" = (
 /obj/cable{
 	d1 = 4;
@@ -41054,6 +41093,10 @@
 /obj/machinery/vending/computer3,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"klL" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "klQ" = (
 /obj/machinery/phone/wall{
 	pixel_x = 24;
@@ -41513,6 +41556,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"lFo" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/access_spawn/engineering_power,
+/obj/firedoor_spawn,
+/turf/simulated/floor/grime,
+/area/station/engine/inner)
 "lHl" = (
 /obj/machinery/portable_atmospherics/canister,
 /turf/simulated/floor/grime,
@@ -41617,6 +41673,10 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"lXB" = (
+/obj/machinery/vehicle/miniputt/indyputt/armed,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "lYX" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -41629,6 +41689,12 @@
 /obj/decal/tile_edge/floorguide/arrow_w,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
+"mbD" = (
+/obj/warp_beacon{
+	name = "Engineering Dock"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mco" = (
 /obj/decal/tile_edge/floorguide/qm{
 	dir = 1
@@ -42289,6 +42355,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
+"otx" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/engineering_horizontal/vertical,
+/obj/forcefield/energyshield/perma{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "otU" = (
 /obj/cable{
 	icon_state = "5-9"
@@ -43415,6 +43491,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
+"scr" = (
+/obj/machinery/r_door_control/podbay/engineering,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/engine)
 "sdc" = (
 /obj/landmark{
 	name = "SR Welder"
@@ -44821,6 +44901,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
+"wpj" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/engine)
 "wql" = (
 /obj/machinery/light{
 	dir = 4;
@@ -45060,6 +45144,15 @@
 	dir = 10
 	},
 /area/station/quartermaster/refinery)
+"wVF" = (
+/obj/machinery/camera{
+	c_tag = "South Primary Hallway";
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "wYe" = (
 /obj/shrub{
 	dir = 1
@@ -45324,6 +45417,15 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"xRc" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/caution/west,
+/area/station/hangar/engine)
 "xRw" = (
 /obj/machinery/sparker{
 	id = "tox_ignition2";
@@ -45478,6 +45580,9 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
+"ykO" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/engine)
 
 (1,1,1) = {"
 aaa
@@ -69833,7 +69938,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aCy
@@ -70135,7 +70240,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aCy
@@ -70437,7 +70542,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aCy
@@ -70739,7 +70844,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aaa
@@ -71041,7 +71146,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aaa
@@ -71343,7 +71448,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aaa
@@ -71644,9 +71749,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aae
+mbD
+acF
 aaa
 aaa
 aaa
@@ -71947,7 +72052,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aaa
@@ -72249,7 +72354,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aaa
@@ -72551,7 +72656,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aaa
@@ -72583,7 +72688,7 @@ bzh
 bzT
 bsT
 bsT
-bsT
+wVF
 eWy
 bsT
 bsT
@@ -72853,7 +72958,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+adQ
 aaa
 aaa
 aaa
@@ -72891,7 +72996,7 @@ bsF
 bsF
 byq
 bsF
-bsF
+fOS
 bGj
 bGt
 ojG
@@ -73155,14 +73260,14 @@ aaa
 aaa
 aaa
 aaa
+adQ
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aap
+viW
+viW
+viW
+viW
+acv
 aaa
 adQ
 aaa
@@ -73459,12 +73564,12 @@ bcG
 bck
 bck
 bck
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+scr
+otx
+otx
+otx
+otx
+ykO
 aaa
 adQ
 aaa
@@ -73761,12 +73866,12 @@ bcH
 bde
 bdJ
 bck
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+wpj
+ckV
+ckV
+ckV
+ckV
+ykO
 aaa
 adQ
 aaa
@@ -74064,11 +74169,11 @@ bdf
 bdK
 bck
 bck
-aaa
-aaa
-aaa
-aaa
-aaa
+lXB
+ckV
+ckV
+fqR
+ykO
 aaa
 adQ
 aYG
@@ -74366,11 +74471,11 @@ bdf
 bdL
 bem
 bck
-acv
-aaa
-aaa
-aaa
-aaa
+iQZ
+ckV
+ckV
+klL
+ykO
 aaa
 aas
 acK
@@ -74668,11 +74773,11 @@ bdf
 bdM
 ben
 bck
-aas
-aaa
-aaa
-aag
-aas
+ibA
+xRc
+dZU
+dsC
+ykO
 bhW
 bhW
 bjt
@@ -74972,7 +75077,7 @@ beo
 beG
 beG
 beG
-beG
+lFo
 beG
 bhr
 bhr
