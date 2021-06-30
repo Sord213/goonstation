@@ -103,6 +103,12 @@
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/dojo/stone,
 /area/shuttle/escape/centcom/cogmap)
+"x" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/shuttle/escape/centcom/cogmap)
 "y" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-2"
@@ -162,6 +168,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"M" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/dream/beach,
+/area/shuttle/escape/centcom/cogmap)
 "N" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/light/small/floor,
@@ -242,9 +252,9 @@ Y
 Y
 z
 Y
-Y
-Y
-Y
+M
+M
+M
 Y
 R
 J
@@ -262,11 +272,11 @@ C
 C
 Q
 Q
-Q
+O
 Q
 Q
 p
-Y
+x
 R
 h
 h
@@ -376,11 +386,11 @@ C
 C
 Q
 Q
-Q
+O
 Q
 Q
 G
-Y
+x
 Z
 h
 h
@@ -394,9 +404,9 @@ Y
 Y
 z
 Y
-Y
-Y
-Y
+M
+M
+M
 Y
 Z
 J
