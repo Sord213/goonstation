@@ -56,6 +56,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
 "q" = (
@@ -78,6 +79,12 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/dojo/sand/circle,
+/area/shuttle/escape/centcom/cogmap)
+"v" = (
+/obj/stool/chair/comfy/green{
+	dir = 4
+	},
+/turf/unsimulated/floor/dojo/sand/horizontal,
 /area/shuttle/escape/centcom/cogmap)
 "w" = (
 /obj/machinery/computer/shuttle/embedded/south,
@@ -145,6 +152,12 @@
 "H" = (
 /turf/unsimulated/floor/dojo/sand/horizontal,
 /area/shuttle/escape/centcom/cogmap)
+"I" = (
+/obj/stool/chair/comfy/green{
+	dir = 8
+	},
+/turf/unsimulated/floor/dojo/sand/horizontal,
+/area/shuttle/escape/centcom/cogmap)
 "J" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -157,7 +170,12 @@
 /area/shuttle/escape/centcom/cogmap)
 "K" = (
 /obj/table/wood/round/auto,
+/obj/machinery/light/small/floor/warm,
 /turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/cogmap)
+"L" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
 "M" = (
 /obj/indestructible/shuttle_corner{
@@ -199,10 +217,12 @@
 /area/shuttle/escape/centcom/cogmap)
 "T" = (
 /obj/tree1,
+/obj/machinery/light/small/floor/warm,
 /turf/unsimulated/floor/dojo/sand/circle,
 /area/shuttle/escape/centcom/cogmap)
 "V" = (
 /obj/table/wood/round/auto,
+/obj/machinery/light/small/floor/warm,
 /turf/unsimulated/floor/dojo/sand,
 /area/shuttle/escape/centcom/cogmap)
 "W" = (
@@ -234,9 +254,9 @@ O
 O
 m
 O
-O
-O
-O
+L
+L
+L
 O
 M
 q
@@ -249,16 +269,16 @@ W
 C
 N
 h
+N
+v
 h
-H
-h
-H
-h
+v
+N
 B
 V
 R
 E
-O
+L
 M
 k
 k
@@ -363,16 +383,16 @@ b
 x
 P
 h
+P
+I
 h
-H
-h
-H
-h
+I
+P
 B
 V
 R
 J
-O
+L
 e
 k
 k
@@ -386,9 +406,9 @@ O
 O
 m
 O
-O
-O
-O
+L
+L
+L
 O
 e
 q

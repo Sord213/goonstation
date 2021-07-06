@@ -162,6 +162,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"K" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/cogmap)
 "N" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/light/small/floor,
@@ -242,9 +246,9 @@ Y
 Y
 z
 Y
-Y
-Y
-Y
+K
+K
+K
 Y
 R
 J
@@ -266,7 +270,7 @@ Q
 Q
 Q
 p
-Y
+K
 R
 h
 h
@@ -380,7 +384,7 @@ Q
 Q
 Q
 G
-Y
+K
 Z
 h
 h
@@ -394,9 +398,9 @@ Y
 Y
 z
 Y
-Y
-Y
-Y
+K
+K
+K
 Y
 Z
 J
