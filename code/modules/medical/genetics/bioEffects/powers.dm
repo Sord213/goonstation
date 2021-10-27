@@ -414,19 +414,27 @@
 		if (..())
 			return 1
 
-		if (!ishuman(target))
-			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
-			return 1
 		if (target == owner)
 			boutput(owner, "<span class='alert'>While \"be yourself\" is pretty good advice, that would be taking it a bit too literally.</span>")
 			return 1
+		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
+			return 1
+
+		if (!ishuman(target))
+			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
+			return 1
 		var/mob/living/carbon/human/H = target
-		if (!H.bioHolder)
+		if (!H.bioHolder || H.mutantrace?.dna_mutagen_banned)
 			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
 			return 1
 
-		if (get_dist(H,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
-			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
+		if (!ishuman(owner))
+			boutput(owner, "<span class='alert'>Your body doesn't seem to be compatible with this ability.</span>")
+			return 1
+		var/mob/living/carbon/human/H2= target
+		if (!H2.bioHolder || H2.mutantrace?.dna_mutagen_banned)
+			boutput(owner, "<span class='alert'>Your body doesn't seem to be compatible with this ability.</span>")
 			return 1
 
 		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
@@ -976,10 +984,7 @@
 			var/toxic = owner.bioHolder.HasEffect("toxic_farts")
 			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
-				var/datum/reagents/R = new(toxic * 100)
-				R.add_reagent("toxic_fart", 50 * toxic)
-				R.add_reagent("toxin", (toxic - 1) * 50)
-				fart_turf.fluid_react(R, R.total_volume, airborne = 1)
+				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
 			SF.farting = 0
 			if (linked_power.power > 1)

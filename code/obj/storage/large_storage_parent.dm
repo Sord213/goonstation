@@ -42,7 +42,7 @@
 	var/health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
-	var/datum/data/record/account = null
+	var/datum/db_record/account = null
 	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
 	var/open_fail_prob = 50
@@ -530,7 +530,7 @@
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
 				for_by_tcl(O, /obj/storage)
-					if (O.z != src.z || O.open || !O.can_open())
+					if (O.z != src.z || O.open || !O.can_open() || isrestrictedz(O.z))
 						continue
 					myPals.Add(O)
 

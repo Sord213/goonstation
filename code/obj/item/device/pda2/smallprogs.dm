@@ -24,7 +24,7 @@
 	name = "BankBuddy"
 	size = 8
 
-	var/tmp/datum/data/record/bank_record = null
+	var/tmp/datum/db_record/bank_record = null
 
 	return_text()
 		if (..())
@@ -40,8 +40,8 @@
 		if (!src.master || !src.master.owner)
 			return 0
 
-		for(var/datum/data/record/B in data_core.bank)
-			if(lowertext(B.fields["name"]) == lowertext(src.master.owner))
+		for(var/datum/db_record/B as anything in data_core.bank.records)
+			if(lowertext(B["name"]) == lowertext(src.master.owner))
 				src.bank_record = B
 				return 1
 		return 0
@@ -60,8 +60,8 @@
 		dat += "<h4>Crew Manifest</h4>"
 		dat += "Entries cannot be modified from this terminal.<br><br>"
 
-		for (var/datum/data/record/t in data_core.general)
-			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+		for (var/datum/db_record/t as anything in data_core.general.records)
+			dat += "[t["name"]] - [t["rank"]]<br>"
 		dat += "<br>"
 
 		return dat
@@ -575,7 +575,7 @@ Code:
 		if(length(by_type[/obj/machinery/power/vent_capture]))
 			. += "<BR><h4>Vent Capture Unit Status</h4>"
 			for_by_tcl(V, /obj/machinery/power/vent_capture)
-				if(V.z == 1 && (locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes) )
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
 					engine_found = TRUE
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
@@ -908,11 +908,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					var/can_approve = 0
 
 					var/PDAowner = src.master.owner
-					var/PDAownerjob = "Unknown Job"
-					for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-						if(G.fields["name"] == PDAowner)
-							PDAownerjob = G.fields["rank"]
-							break
+					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 					if(PDAownerjob in list("Head of Security","Head of Personnel","Captain")) can_approve = 1
 
@@ -955,11 +951,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		if(href_list["ticket"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text
 			if(!ticket_target) return
@@ -983,36 +975,28 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN_DBG(3 SECONDS)
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Caution - [ticket_target]"
 				p.info = ticket_text
 				p.icon_state = "paper_caution"
 
 
-/*			for(var/datum/data/record/S in data_core.security) //there is probably a better way of doing this too
-				if(S.fields["name"] == ticket_target)
-					if(S.fields["notes"] == "No notes.")
-						S.fields["notes"] = ticket_text
-					else S.fields["notes"] += ticket_text
+/*			for(var/datum/db_record/S as anything in data_core.security.records) //there is probably a better way of doing this too
+				if(S["name"] == ticket_target)
+					if(S["notes"] == "No notes.")
+						S["notes"] = ticket_text
+					else S["notes"] += ticket_text
 					break*/
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Fine recipient:",src.name) as text
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
-			var/has_bank_record = 0
-			for(var/datum/data/record/B in data_core.bank) //this too
-				if(B.fields["name"] == ticket_target)
-					has_bank_record = 1
-					break
+			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
 			if(!has_bank_record)
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
@@ -1041,7 +1025,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 				SPAWN_DBG(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
-					var/obj/item/paper/p = unpool(/obj/item/paper)
+					var/obj/item/paper/p = new /obj/item/paper
 					p.set_loc(get_turf(src.master))
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
@@ -1051,11 +1035,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/datum/fine/F = locate(href_list["approve"])
 
@@ -1063,7 +1043,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			SPAWN_DBG(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Fine Notification - [F.target]"
 				p.info = ticket_text

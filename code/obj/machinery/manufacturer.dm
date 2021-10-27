@@ -4,8 +4,8 @@
 	name = "Manufacturing Unit"
 	desc = "A standard fabricator unit capable of producing certain items from various materials."
 	icon = 'icons/obj/manufacturer.dmi'
-	icon_state = "fab"
-	var/icon_base = null
+	icon_state = "fab-general"
+	var/icon_base = "general"
 	density = 1
 	anchored = 1
 	mats = 20
@@ -508,10 +508,10 @@
 		// This is not re-formatted yet just b/c i don't wanna mess with it
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
+				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
@@ -592,7 +592,7 @@
 							if (ejectamt == O.amount)
 								O.set_loc(get_output_location(O,1))
 							else
-								var/obj/item/material_piece/P = unpool(O.type)
+								var/obj/item/material_piece/P = new O.type
 								P.setMaterial(copyMaterial(O.material))
 								P.change_stack_amount(ejectamt - P.amount)
 								O.change_stack_amount(-ejectamt)
@@ -791,7 +791,7 @@
 				if (src.scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 					return
-				var/datum/data/record/account = null
+				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (account)
 					var/quantity = 1
@@ -804,18 +804,15 @@
 						var/sum_taxes = round(taxes * quantity)
 						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
 						var/total = subtotal + sum_taxes + rockbox_fees
-						if(account.fields["current_money"] >= total)
-							account.fields["current_money"] -= total
+						if(account["current_money"] >= total)
+							account["current_money"] -= total
 							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
 							 // This next bit is stolen from PTL Code
-							var/list/accounts = list()
-							for(var/datum/data/record/t in data_core.bank)
-								if(t.fields["job"] == "Chief Engineer")
-									accounts += t
-									accounts += t //fuck it x2
-								else if(t.fields["job"] == "Miner")
-									accounts += t
+							var/list/accounts = \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Engineer")
 
 
 							var/datum/signal/minerSignal = get_free_signal()
@@ -823,13 +820,13 @@
 							minerSignal.transmission_method = TRANSMISSION_RADIO
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
-							if(accounts.len)
-								leftovers = length(subtotal%accounts)
+							if(length(accounts))
+								leftovers = subtotal % length(accounts)
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)
-									for(var/datum/data/record/t in accounts)
-										t.fields["current_money"] += amount_per_account
+									for(var/datum/db_record/t as anything in accounts)
+										t["current_money"] += amount_per_account
 									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGO_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
 							else
 								leftovers = subtotal
@@ -863,6 +860,10 @@
 		if (src.electrified)
 			if (src.manuf_zap(usr, 33))
 				return
+
+		if (istype(W, /obj/item/ore_scoop))
+			var/obj/item/ore_scoop/scoop = W
+			W = scoop.satchel
 
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
@@ -1070,7 +1071,7 @@
 		if (istype(I, /obj/item/card/id))
 			var/obj/item/card/id/ID = I
 			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
 			if(account)
 				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
@@ -1403,7 +1404,7 @@
 						var/target_amount = round(src.resource_amounts[mat_id] / 10)
 						if (!target_amount)
 							src.contents -= I
-							pool(I)
+							qdel(I)
 						else if (I.amount != target_amount)
 							I.change_stack_amount(-(I.amount - target_amount))
 						break
@@ -1791,7 +1792,7 @@
 				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
 					src.update_resource_amount(M.material.mat_id, P.amount * 10)
-					pool(P)
+					qdel(P)
 					return
 			src.update_resource_amount(P.material.mat_id, P.amount * 10)
 
@@ -1834,7 +1835,7 @@
 		else if (free_resources.len && free_resource_amt > 0)
 			for (var/X in src.free_resources)
 				if (ispath(X))
-					var/obj/item/material_piece/P = unpool(X)
+					var/obj/item/material_piece/P = new X
 					P.set_loc(src)
 					if (free_resource_amt > 1)
 						P.change_stack_amount(free_resource_amt - P.amount)
@@ -1910,7 +1911,7 @@
 			if (ispath(src.blueprint))
 				src.blueprint = get_schematic_from_path(src.blueprint)
 			else
-				pool(src)
+				qdel(src)
 				return 0
 		else
 			if (istext(schematic))
@@ -2179,7 +2180,8 @@
 	/datum/manufacture/cybereye_thermal,
 	/datum/manufacture/cybereye_laser,
 	/datum/manufacture/cyberbutt,
-	/datum/manufacture/robup_expand)
+	/datum/manufacture/robup_expand,
+	/datum/manufacture/cardboard_ai)
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"
@@ -2391,6 +2393,7 @@
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
@@ -2488,6 +2491,7 @@
 	/datum/manufacture/implant_access_infinite,
 	/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
+	/datum/manufacture/tricolor,
 	/datum/manufacture/hat_ltophat)
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
@@ -2608,7 +2612,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/datum/manufacture/P as anything in typesof(/datum/manufacture))
+	for (var/datum/manufacture/P as anything in concrete_typesof(/datum/manufacture, FALSE))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

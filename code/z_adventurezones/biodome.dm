@@ -32,7 +32,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sound_group = "biodome"
 
 /area/crater/biodome
-	name = "Botanical Research Biodome"
+	name = "Botanical Research Outpost Gamma"
 	icon_state = "green"
 	force_fullbright = 0
 	sound_environment = 1
@@ -92,7 +92,97 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "cave-dark"
 	fullbright = 0
 
-////////////////////// cogwerks - crypt place
+
+////////////////// BIODOME EXPANSION PROJECT AREAS ///////////////////
+/area/swampzone
+	name = "X-05 Fatuus"
+	icon_state = "green"
+	force_fullbright = 0
+	filler_turf = "/turf/unsimulated/floor/auto/dirt"
+	ambient_light = rgb(200, 150, 150)
+	sound_environment = 15
+	skip_sims = 1
+	sims_score = 0
+	sound_group = "swamp_outdoors"
+
+	heights
+		name = "X-05 Heights"
+		icon_state = "blue"
+		ambient_light = rgb(180, 150, 150)
+		sound_group = "swamp_heights"
+		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+	ground
+		name = "X-05 Swamplands"
+		sound_group = "swamp_surface"
+		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+
+	deeps
+		name = "X-05 Deep Swamp"
+		icon_state = "green"
+		ambient_light = rgb(60, 180, 75)
+		sound_group = "swamp_deeps"
+		sound_environment = 22
+		sound_loop = 'sound/ambience/nature/Cave_Rumbling.ogg'
+
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "swampwater_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Lavamoon_DeepBubble1.ogg','sound/ambience/nature/Lavamoon_DeepBubble2.ogg', 'sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+
+
+
+
+////////////////////// crypt place
 
 /area/crypt
 	sound_group = "crypt"
@@ -185,7 +275,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sims_score = 0
 	sound_group = "catacombs"
 
-////// cogwerks - lava turf
+////// lava turf
 
 /turf/unsimulated/floor/lava
 	name = "Lava"
@@ -382,13 +472,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 		active = 1
 
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(tile)
 
 		SPAWN_DBG(0.5 SECONDS)
-			tile.invisibility = 100
+			tile.invisibility = INVIS_ALWAYS_ISH
 			tile.opacity = 1
 			active = 0
 
@@ -423,13 +513,13 @@ SYNDICATE DRONE FACTORY AREAS
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(picked)
 
 		SPAWN_DBG(0.5 SECONDS)
-			picked.invisibility = 100
+			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.opacity = 1
 			active = 0
 
@@ -448,7 +538,7 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 
 /obj/item/whip
 	name = "whip"
@@ -493,7 +583,7 @@ SYNDICATE DRONE FACTORY AREAS
 				boutput(user, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
 				user.set_loc(T)
 
-			SPAWN_DBG(0.2 SECONDS) pool(O)
+			SPAWN_DBG(0.2 SECONDS) qdel(O)
 
 		if(istype(target_r, /obj/whip_trg_dummy)) qdel(target_r)
 
@@ -541,7 +631,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/boulder_trap
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/ready = 1
@@ -622,7 +712,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/sneaky_wall_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
@@ -745,7 +835,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
@@ -786,7 +876,7 @@ SYNDICATE DRONE FACTORY AREAS
 	proc/crumble()
 		src.visible_message("<span class='alert'><b>[src] crumbles!</b></span>")
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 50, 1)
-		var/obj/effects/bad_smoke/smoke = unpool(/obj/effects/bad_smoke)
+		var/obj/effects/bad_smoke/smoke = new /obj/effects/bad_smoke
 		smoke.name = "dust cloud"
 		smoke.set_loc(src.loc)
 		icon_state = "rubble"
@@ -795,7 +885,7 @@ SYNDICATE DRONE FACTORY AREAS
 		SPAWN_DBG(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
-				pool(smoke)
+				qdel(smoke)
 		return
 
 /////////////////////////////// ALCHEMY CIRCLE STUFF
@@ -989,7 +1079,7 @@ SYNDICATE DRONE FACTORY AREAS
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
-				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
+				playsound_global(world, "sound/effects/mag_pandroar.ogg", 60) // heh
 				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)
@@ -1136,7 +1226,7 @@ var/satellite_crash_event_status = -1
 			satellite_crash_event_status = -1
 			return
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/particle_count = rand(8,16)
 		while (particle_count--)
 			var/obj/effects/expl_particles/EP = new /obj/effects/expl_particles {pixel_y = 600; name = "space debris";} (pick(orange(src,3)))
@@ -1216,3 +1306,6 @@ var/satellite_crash_event_status = -1
 /area/drone/assembly
 	name = "Assembly Floor"
 	icon_state = "storage"
+
+
+
