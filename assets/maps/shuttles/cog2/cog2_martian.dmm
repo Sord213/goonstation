@@ -9,7 +9,11 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/med_kit,
 /obj/random_item_spawner/med_kit,
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "dg" = (
 /turf/unsimulated/floor/stairs{
@@ -33,7 +37,11 @@
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "pm" = (
 /obj/overlay{
@@ -45,14 +53,22 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "pZ" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
 /obj/map/light/dimred,
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "qn" = (
 /obj/overlay{
@@ -62,7 +78,11 @@
 	name = "dessicated alien"
 	},
 /obj/map/light/dimred,
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "rZ" = (
 /obj/decal/aliencomputer{
@@ -73,16 +93,28 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "tR" = (
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "uF" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "vQ" = (
 /turf/unsimulated/wall{
@@ -138,19 +170,31 @@
 /area/centcom)
 "Hm" = (
 /obj/map/light/dimred,
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "Jr" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "MN" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "NK" = (
 /obj/grille/steel,
@@ -183,7 +227,11 @@
 /area/shuttle/escape/centcom/cogmap2)
 "Ry" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "SD" = (
 /obj/overlay{
@@ -192,7 +240,11 @@
 	icon_state = "marscorpse";
 	name = "dessicated alien"
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "SV" = (
 /turf/simulated/martian/wall{
@@ -207,25 +259,39 @@
 "UG" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/med_kit,
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "Vk" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/unsimulated/floor/shuttle{
-	dir = 8
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
 	},
 /area/shuttle/escape/centcom/cogmap2)
 "VR" = (
 /obj/machinery/door/unpowered/martian{
 	opacity = 0
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "Xf" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
-/turf/simulated/martian/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1";
+	name = "organic floor"
+	},
 /area/shuttle/escape/centcom/cogmap2)
 "Yc" = (
 /turf/simulated/martian/wall{
