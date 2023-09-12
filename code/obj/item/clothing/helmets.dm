@@ -9,11 +9,38 @@
 	protective_temperature = 500
 	duration_remove = 5 SECONDS
 
+	/// For aesthetickit styling
+	var/style_id = null
+	/// Do we have an aesthetic kit attached?
+	var/aeskitattached = FALSE
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 4)
+
+	attackby(var/obj/item/T, var/mob/user) //sordsstuff.dm maybe remove later
+		if(istype(T, /obj/item/aesthetickit))
+			if(src.aeskitattached)
+				boutput(user, "<span class='alert'>There is already an aesthtic kit attached to this helmet! Use a snipping tool to remove it.</span>")
+				return
+			else
+				src.addaesthetickit(T)
+				boutput(user, "<span class='alert'>You attach the [T.name] the [src.name].</span>")
+				user.update_clothing()
+
+
+		if(issnippingtool(T))
+			if(src.aeskitattached)
+				src.removeaesthetickit()
+				boutput(user, "<span class='alert'>You remove the aesthetic kit from the [src.name].</span>")
+				user.update_clothing()
+			else
+				. = ..()
+		else
+			. = ..()
+
 
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
@@ -174,6 +201,15 @@
 		// Add back the helmet texture since we overide the material apparance
 		if (helmMat.getTexture())
 			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
+
+	attackby(var/obj/item/T, var/mob/user)
+		if(istype(T, /obj/item/aesthetickit))
+			boutput(user, "<span class='alert'>The [T.name] doesn't seem to fit this custom made [src.name]!</span>") // let's not fuck up the overlays on this thing.
+			return
+
+		else
+			. = ..()
+
 
 // Sealab helmets
 
