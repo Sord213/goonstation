@@ -5,6 +5,15 @@
 #define OPEN_CLOSE_POWER_USAGE 50
 #define LINKED_FORCEFIELD_POWER_USAGE 100
 
+// door hack time defines
+#define DOOR_NOSEC 1 // Standard doors that take very little time to hack like glass doors or maintenance doors
+#define DOOR_LOWSEC 3 // Something a little stronger like medbay or engineering
+#define DOOR_MEDSEC 5 // Security's doors
+#define DOOR_HEAVYSEC 7 // Bridge/armory doors
+#define DOOR_ULTRASEC 9 // tuff stuff
+#define DOOR_MAXSEC 15 // really tuff stuff
+#define DOOR_STUPIDSEC 30 // fuck you
+
 /// a global associative list of all airlocks linked together by cycling mechanisms. Indexed by ID
 var/global/list/cycling_airlocks = list()
 
@@ -199,6 +208,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/hackingProgression = 0
 	var/has_panel = TRUE
 	var/hackMessage = ""
+	var/hack_time = DOOR_NOSEC // How many seconds does it take to open the maintenance panel?
 	var/net_access_code = null
 
 	var/no_access = 0
@@ -249,21 +259,25 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
 	req_access = list(access_heads)
+	hack_time = DOOR_HEAVYSEC
 
 /obj/machinery/door/airlock/security
 	name = "security airlock"
 	icon = 'icons/obj/doors/Doorsec.dmi'
 	req_access = list(access_security)
+	hack_time = DOOR_MEDSEC
 
 /obj/machinery/door/airlock/engineering
 	name = "engineering airlock"
 	icon = 'icons/obj/doors/Dooreng.dmi'
 	req_access = list(access_engineering)
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/medical
 	name = "medical airlock"
 	icon = 'icons/obj/doors/doormed.dmi'
 	req_access = list(access_medical)
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance airlock"
@@ -277,6 +291,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	opacity = 0
 	visible = 0
 	operation_time = 10
+	hack_time = DOOR_LOWSEC
 
 TYPEINFO(/obj/machinery/door/airlock/syndicate)
 	mats = 0
@@ -326,16 +341,19 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 		name = "command airlock"
 		icon = 'icons/obj/doors/Doorcom-glass.dmi'
 		req_access = list(access_heads)
+		hack_time = DOOR_HEAVYSEC
 
 /obj/machinery/door/airlock/glass/engineering
 		name = "engineering airlock"
 		icon = 'icons/obj/doors/Dooreng-glass.dmi'
 		req_access = list(access_engineering)
+		hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/glass/medical
 		name = "medical airlock"
 		icon = 'icons/obj/doors/Doormed-glass.dmi'
 		req_access = list(access_medical)
+		hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/classic
 	name = "large airlock"
@@ -364,6 +382,7 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 	req_access = null
 	health = 800
 	health_max = 800
+	hack_time = DOOR_HEAVYSEC
 
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
 	mats = 0
@@ -412,6 +431,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	icon_state = "sec_closed"
 	icon_base = "sec"
 	req_access = null
+	hack_time = DOOR_MEDSEC
 
 /obj/machinery/door/airlock/pyro/security/alt
 	icon_state = "sec2_closed"
@@ -425,6 +445,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	icon_state = "eng_closed"
 	icon_base = "eng"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/engineering/alt
 	icon_state = "eng2_closed"
@@ -438,6 +459,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	icon_state = "research_closed"
 	icon_base = "research"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/medical/alt
 	icon_state = "research2_closed"
@@ -467,6 +489,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/maintenance
 	name = "maintenance airlock"
@@ -491,6 +514,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	opacity = 0
 	visible = 0
 	operation_time = 10
+	hack_time = DOOR_LOWSEC
 
 TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	mats = 0
@@ -560,18 +584,21 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	icon_state = "com_glass_closed"
 	icon_base = "com_glass"
 	req_access = null
+	hack_time = DOOR_HEAVYSEC
 
 /obj/machinery/door/airlock/pyro/glass/engineering
 	name = "engineering airlock"
 	icon_state = "eng_glass_closed"
 	icon_base = "eng_glass"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/glass/security //Shitty Azungar recolor, no need to thank me.
 	name = "security airlock"
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
 	req_access = null
+	hack_time = DOOR_MEDSEC
 
 /obj/machinery/door/airlock/pyro/glass/security/alt
 	name = "security airlock"
@@ -584,30 +611,35 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	icon_state = "med_glass_closed"
 	icon_base = "med_glass"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/glass/sci
 	name = "research airlock"
 	icon_state = "sci_glass_closed"
 	icon_base = "sci_glass"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/glass/toxins
 	name = "toxins airlock"
 	icon_state = "toxins_glass_closed"
 	icon_base = "toxins_glass"
 	req_access = null
+	hack_time = DOOR_MEDSEC
 
 /obj/machinery/door/airlock/pyro/glass/mining
 	name = "mining airlock"
 	icon_state = "mining_glass_closed"
 	icon_base = "mining_glass"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/glass/botany
 	name = "botany airlock"
 	icon_state = "botany_glass_closed"
 	icon_base = "botany_glass"
 	req_access = null
+	hack_time = DOOR_NOSEC
 
 /obj/machinery/door/airlock/pyro/classic
 	name = "old airlock"
@@ -737,6 +769,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
+	hack_time = DOOR_LOWSEC
 
 /obj/machinery/door/airlock/pyro/toxins_alt
 	name = "toxins airlock"
@@ -745,6 +778,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
 	req_access = null
+	hack_time = DOOR_MEDSEC
 
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
@@ -762,6 +796,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "com_closed"
 		icon_base = "com"
 		req_access = list(access_heads)
+		hack_time = DOOR_HEAVYSEC
 
 	command/alt
 		icon_state = "fcom_closed"
@@ -773,6 +808,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "sec_closed"
 		icon_base = "sec"
 		req_access = list(access_security)
+		hack_time = DOOR_MEDSEC
 
 	security/alt
 		icon_state = "fsec_closed"
@@ -784,6 +820,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "eng_closed"
 		icon_base = "eng"
 		req_access = list(access_engineering)
+		hack_time = DOOR_LOWSEC
 
 	engineering/alt
 		icon_state = "feng_closed"
@@ -795,6 +832,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "med_closed"
 		icon_base = "med"
 		req_access = list(access_medical)
+		hack_time = DOOR_LOWSEC
 
 	medical/alt
 		icon_state = "fmed_closed"
@@ -817,6 +855,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "chem_closed"
 		icon_base = "chem"
 		req_access = list(access_research)
+		hack_time = DOOR_LOWSEC
 
 	chemistry/alt
 		icon_state = "fchem_closed"
@@ -828,6 +867,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "tox_closed"
 		icon_base = "tox"
 		req_access = list(access_research)
+		hack_time = DOOR_MEDSEC
 
 	toxins/alt
 		icon_state = "ftox_closed"
@@ -859,6 +899,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "tcom_closed"
 		icon_base = "tcom"
 		req_access = list(access_heads)
+		hack_time = DOOR_HEAVYSEC
 
 	command/alt
 		icon_state = "tfcom_closed"
@@ -870,6 +911,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "tsec_closed"
 		icon_base = "tsec"
 		req_access = list(access_security)
+		hack_time = DOOR_MEDSEC
 
 	security/alt
 		icon_state = "tfsec_closed"
@@ -881,6 +923,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "teng_closed"
 		icon_base = "teng"
 		req_access = list(access_engineering)
+		hack_time = DOOR_LOWSEC
 
 	engineering/alt
 		icon_state = "tfeng_closed"
@@ -892,6 +935,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "tmed_closed"
 		icon_base = "tmed"
 		req_access = list(access_medical)
+		hack_time = DOOR_LOWSEC
 
 	medical/alt
 		icon_state = "tfmed_closed"
@@ -903,6 +947,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "tmorg_closed"
 		icon_base = "tmorg"
 		req_access = list(access_morgue)
+		hack_time = DOOR_LOWSEC
 
 	morgue/alt
 		icon_state = "tfmorg_closed"
@@ -914,6 +959,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "tchem_closed"
 		icon_base = "tchem"
 		req_access = list(access_research)
+		hack_time = DOOR_LOWSEC
 
 	chemistry/alt
 		icon_state = "tfchem_closed"
@@ -925,6 +971,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 		icon_state = "ttox_closed"
 		icon_base = "ttox"
 		req_access = list(access_research)
+		hack_time = DOOR_MEDSEC
 
 	toxins/alt
 		icon_state = "tftox_closed"
@@ -1586,7 +1633,9 @@ About the new airlock wires panel:
 		if (!src.has_panel)
 			boutput(user, SPAN_ALERT("[src] does not have a panel for you to unscrew!"))
 			return
-		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/machinery/door/airlock/proc/interact_panel, user, C.icon, C.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		if (src.hack_time > DOOR_NOSEC)
+			playsound(src.loc, 'sound/items/screwdriver.ogg', 25, TRUE)
+		SETUP_GENERIC_ACTIONBAR(user, src, src.hack_time SECONDS, /obj/machinery/door/airlock/proc/interact_panel, user, C.icon, C.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 	else if (issnippingtool(C) && src.panel_open)
 		return src.Attackhand(user)
 	else if (ispulsingtool(C))
